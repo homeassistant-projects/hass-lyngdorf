@@ -181,8 +181,8 @@ class LyngdorfOptionsFlow(OptionsFlow):
             CONF_SOURCES, self._config_entry.data.get(CONF_SOURCES, {})
         )
 
-        # import SOURCES from pylyngdorf for default names
-        from pylyngdorf.models import SOURCES
+        # import AUDIO_INPUTS from pylyngdorf for default names
+        from pylyngdorf.models import AUDIO_INPUTS
 
         # build schema with commonly used sources
         # users can customize the ones they use
@@ -190,7 +190,7 @@ class LyngdorfOptionsFlow(OptionsFlow):
         schema_dict = {}
 
         for source_id in common_sources:
-            default_name = current_sources.get(source_id, SOURCES.get(source_id, ''))
+            default_name = current_sources.get(source_id, AUDIO_INPUTS.get(source_id, ''))
             schema_dict[vol.Optional(f'source_{source_id}', default=default_name)] = cv.string
 
         schema = vol.Schema(schema_dict)
