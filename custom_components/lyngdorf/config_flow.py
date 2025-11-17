@@ -15,8 +15,8 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector
 
-from pylyngdorf import async_get_lyngdorf
-from pylyngdorf.models import SUPPORTED_MODELS, get_model_config
+from .pylyngdorf import async_get_lyngdorf
+from .pylyngdorf.models import SUPPORTED_MODELS, get_model_config
 
 from .utils import get_connection_overrides
 from .const import (
@@ -194,7 +194,7 @@ class LyngdorfOptionsFlow(OptionsFlow):
         )
 
         # import AUDIO_INPUTS from pylyngdorf for default names
-        from pylyngdorf.models import AUDIO_INPUTS
+        from .pylyngdorf.models import AUDIO_INPUTS
 
         # build schema with commonly used sources
         # users can customize the ones they use
@@ -257,7 +257,7 @@ class LyngdorfOptionsFlow(OptionsFlow):
         )
 
         # import AUDIO_INPUTS for source selection
-        from pylyngdorf.models import AUDIO_INPUTS
+        from .pylyngdorf.models import AUDIO_INPUTS
 
         # create list of source options for dropdown
         source_options = [
