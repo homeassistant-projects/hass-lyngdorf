@@ -23,11 +23,30 @@
     "step": {
       "init": {
         "title": "Configure Lyngdorf",
+        "menu_options": {
+          "connection": "Connection Settings",
+          "sources": "Source Names",
+          "zone2": "Zone 2 Configuration"
+        }
+      },
+      "connection": {
+        "title": "Connection Settings",
         "data": {
-          "name": "Name of the device",
-          "model_id": "Lyngdorf model",
-          "url": "pySerial compatible URL (e.g. socket://host:port or /dev/ttyUSB0)",
-          "baud": "Baud rate (if connecting locally via RS232 /dev/tty)"
+          "url": "Connection URL",
+          "baudrate": "Baud Rate"
+        }
+      },
+      "sources": {
+        "title": "Source Names",
+        "description": "Configure custom names for your sources. Leave blank to use defaults."
+      },
+      "zone2": {
+        "title": "Zone 2 Configuration",
+        "description": "Configure Zone 2 settings. Maximum volume is a safety limit in dB.",
+        "data": {
+          "zone2_enabled": "Enable Zone 2",
+          "zone2_default_source": "Default Source for Zone 2",
+          "zone2_max_volume": "Maximum Volume (dB)"
         }
       }
     }

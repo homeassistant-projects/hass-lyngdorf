@@ -19,7 +19,19 @@ from pylyngdorf import async_get_lyngdorf
 from pylyngdorf.models import SUPPORTED_MODELS, get_model_config
 
 from .utils import get_connection_overrides
-from .const import CONF_BAUD_RATE, CONF_MODEL, DEFAULT_URL, DOMAIN, COMPATIBLE_MODELS
+from .const import (
+    CONF_BAUD_RATE,
+    CONF_MODEL,
+    CONF_SOURCES,
+    CONF_ZONE2_ENABLED,
+    CONF_ZONE2_DEFAULT_SOURCE,
+    CONF_ZONE2_MAX_VOLUME,
+    DEFAULT_URL,
+    DEFAULT_ZONE2_ENABLED,
+    DEFAULT_ZONE2_MAX_VOLUME,
+    DOMAIN,
+    COMPATIBLE_MODELS,
+)
 
 LOG = logging.getLogger(__name__)
 
@@ -127,7 +139,7 @@ class LyngdorfOptionsFlow(OptionsFlow):
         """Manage the options for the custom component."""
         return self.async_show_menu(
             step_id='init',
-            menu_options=['connection', 'sources']
+            menu_options=['connection', 'sources', 'zone2']
         )
 
     async def async_step_connection(
@@ -201,5 +213,86 @@ class LyngdorfOptionsFlow(OptionsFlow):
             errors=errors,
             description_placeholders={
                 'info': 'Configure custom names for your sources. Leave blank to use defaults.'
+            }
+        )
+
+    async def async_step_zone2(
+        self, user_input: dict[str, Any] = None
+    ) -> dict[str, Any]:
+        """Configure Zone 2 settings."""
+        errors: dict[str, str] = {}
+
+        if user_input is not None:
+            if not errors:
+                # merge with existing options, preserving other settings
+                updated_options = dict(self._config_entry.options)
+                updated_options[CONF_ZONE2_ENABLED] = user_input.get(CONF_ZONE2_ENABLED, DEFAULT_ZONE2_ENABLED)
+
+                if user_input.get(CONF_ZONE2_ENABLED):
+                    # only save zone 2 settings if enabled
+                    if user_input.get(CONF_ZONE2_DEFAULT_SOURCE) is not None:
+                        updated_options[CONF_ZONE2_DEFAULT_SOURCE] = user_input[CONF_ZONE2_DEFAULT_SOURCE]
+                    updated_options[CONF_ZONE2_MAX_VOLUME] = user_input.get(
+                        CONF_ZONE2_MAX_VOLUME, DEFAULT_ZONE2_MAX_VOLUME
+                    )
+                else:
+                    # remove zone 2 settings if disabled
+                    updated_options.pop(CONF_ZONE2_DEFAULT_SOURCE, None)
+                    updated_options.pop(CONF_ZONE2_MAX_VOLUME, None)
+
+                return self.async_create_entry(title='', data=updated_options)
+
+        # get current zone 2 configuration
+        current_zone2_enabled = self._config_entry.options.get(
+            CONF_ZONE2_ENABLED,
+            self._config_entry.data.get(CONF_ZONE2_ENABLED, DEFAULT_ZONE2_ENABLED)
+        )
+        current_zone2_default_source = self._config_entry.options.get(
+            CONF_ZONE2_DEFAULT_SOURCE,
+            self._config_entry.data.get(CONF_ZONE2_DEFAULT_SOURCE)
+        )
+        current_zone2_max_volume = self._config_entry.options.get(
+            CONF_ZONE2_MAX_VOLUME,
+            self._config_entry.data.get(CONF_ZONE2_MAX_VOLUME, DEFAULT_ZONE2_MAX_VOLUME)
+        )
+
+        # import AUDIO_INPUTS for source selection
+        from pylyngdorf.models import AUDIO_INPUTS
+
+        # create list of source options for dropdown
+        source_options = [
+            selector.SelectOptionDict(value=str(source_id), label=name)
+            for source_id, name in sorted(AUDIO_INPUTS.items(), key=lambda x: x[0])
+            if source_id > 0  # exclude 'None'
+        ]
+
+        schema = vol.Schema(
+            {
+                vol.Required(
+                    CONF_ZONE2_ENABLED,
+                    default=current_zone2_enabled
+                ): cv.boolean,
+                vol.Optional(
+                    CONF_ZONE2_DEFAULT_SOURCE,
+                    default=current_zone2_default_source
+                ): selector.SelectSelector(
+                    selector.SelectSelectorConfig(
+                        options=source_options,
+                        mode=selector.SelectSelectorMode.DROPDOWN,
+                    )
+                ),
+                vol.Optional(
+                    CONF_ZONE2_MAX_VOLUME,
+                    default=current_zone2_max_volume
+                ): vol.All(vol.Coerce(float), vol.Range(min=-99.9, max=24.0)),
+            }
+        )
+
+        return self.async_show_form(
+            step_id='zone2',
+            data_schema=schema,
+            errors=errors,
+            description_placeholders={
+                'info': 'Configure Zone 2 settings. Maximum volume is a safety limit in dB.'
             }
         )
