@@ -24,5 +24,14 @@ CONF_BAUD_RATE: Final = 'baudrate'
 CONF_MODEL: Final = 'model_id'
 CONF_SOURCES: Final = 'sources'
 
+# zone 2 configuration
+CONF_ZONE2_ENABLED: Final = 'zone2_enabled'
+CONF_ZONE2_DEFAULT_SOURCE: Final = 'zone2_default_source'
+CONF_ZONE2_MAX_VOLUME: Final = 'zone2_max_volume'
+
+# defaults
+DEFAULT_ZONE2_ENABLED: Final = False
+DEFAULT_ZONE2_MAX_VOLUME: Final = -20.0  # -20.0 dB default max for safety
+
 # supported lyngdorf models
 COMPATIBLE_MODELS: list[str] = LYNGDORF_MODELS
