@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configureer Lyngdorf",
+        "description": "Stel uw Lyngdorf audioverwerker in",
+        "data": {
+          "model_id": "Lyngdorf model",
+          "url": "Verbindings-URL (bijv. socket://192.168.1.100:84 of /dev/ttyUSB0)",
+          "baudrate": "Baudrate (voor RS232 seriële verbindingen)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken met apparaat",
+      "unsupported": "Niet-ondersteund apparaatmodel",
+      "unknown": "Onverwachte fout opgetreden"
+    },
+    "abort": {
+      "already_configured": "Apparaat is al geconfigureerd"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configureer Lyngdorf",
+        "menu_options": {
+          "connection": "Verbindingsinstellingen",
+          "sources": "Bronnamen",
+          "zone2": "Zone 2 Configuratie"
+        }
+      },
+      "connection": {
+        "title": "Verbindingsinstellingen",
+        "description": "Configureer hoe Home Assistant verbinding maakt met uw Lyngdorf processor",
+        "data": {
+          "url": "Verbindings-URL",
+          "baudrate": "Baudrate"
+        }
+      },
+      "sources": {
+        "title": "Bronnamen",
+        "description": "Pas de namen van uw audiobronnen aan. Laat leeg om standaardnamen te gebruiken."
+      },
+      "zone2": {
+        "title": "Zone 2 Configuratie",
+        "description": "Configureer Zone 2 instellingen. Maximaal volume is een veiligheidslimiet in dB.",
+        "data": {
+          "zone2_enabled": "Zone 2 inschakelen",
+          "zone2_default_source": "Standaardbron voor Zone 2",
+          "zone2_max_volume": "Maximaal volume (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect positie"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect stemming"
+      },
+      "audio_mode": {
+        "name": "Audiomodus"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Bas bijstelling"
+      },
+      "trim_treble": {
+        "name": "Hoge tonen bijstelling"
+      },
+      "trim_center": {
+        "name": "Centraal bijstelling"
+      },
+      "trim_lfe": {
+        "name": "LFE bijstelling"
+      },
+      "trim_surrounds": {
+        "name": "Surround bijstelling"
+      },
+      "trim_height": {
+        "name": "Hoogte bijstelling"
+      },
+      "lipsync": {
+        "name": "Lipsynchronisatie vertraging"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Audioformaat"
+      },
+      "video_input": {
+        "name": "Video-ingang"
+      },
+      "video_output": {
+        "name": "Video-uitgang"
+      }
+    }
+  }
+}

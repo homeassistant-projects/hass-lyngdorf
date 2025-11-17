@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lyngdorfを設定",
+        "description": "Lyngdorf オーディオプロセッサーをセットアップ",
+        "data": {
+          "model_id": "Lyngdorf モデル",
+          "url": "接続URL (例: socket://192.168.1.100:84 または /dev/ttyUSB0)",
+          "baudrate": "ボーレート (RS232 シリアル接続用)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "デバイスへの接続に失敗しました",
+      "unsupported": "サポートされていないデバイスモデル",
+      "unknown": "予期しないエラーが発生しました"
+    },
+    "abort": {
+      "already_configured": "デバイスは既に設定されています"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Lyngdorfを設定",
+        "menu_options": {
+          "connection": "接続設定",
+          "sources": "ソース名",
+          "zone2": "ゾーン2設定"
+        }
+      },
+      "connection": {
+        "title": "接続設定",
+        "description": "Home AssistantがLyngdorfプロセッサーに接続する方法を設定",
+        "data": {
+          "url": "接続URL",
+          "baudrate": "ボーレート"
+        }
+      },
+      "sources": {
+        "title": "ソース名",
+        "description": "オーディオソースの名前をカスタマイズします。デフォルト名を使用する場合は空白のままにしてください。"
+      },
+      "zone2": {
+        "title": "ゾーン2設定",
+        "description": "ゾーン2の設定を構成します。最大音量はdBでの安全制限です。",
+        "data": {
+          "zone2_enabled": "ゾーン2を有効にする",
+          "zone2_default_source": "ゾーン2のデフォルトソース",
+          "zone2_max_volume": "最大音量 (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect 位置"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect 調整"
+      },
+      "audio_mode": {
+        "name": "オーディオモード"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "低音調整"
+      },
+      "trim_treble": {
+        "name": "高音調整"
+      },
+      "trim_center": {
+        "name": "センター調整"
+      },
+      "trim_lfe": {
+        "name": "LFE調整"
+      },
+      "trim_surrounds": {
+        "name": "サラウンド調整"
+      },
+      "trim_height": {
+        "name": "高さ調整"
+      },
+      "lipsync": {
+        "name": "リップシンク遅延"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "オーディオフォーマット"
+      },
+      "video_input": {
+        "name": "ビデオ入力"
+      },
+      "video_output": {
+        "name": "ビデオ出力"
+      }
+    }
+  }
+}
