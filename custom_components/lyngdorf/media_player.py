@@ -113,8 +113,8 @@ class LyngdorfMediaPlayer(MediaPlayerEntity):
             )
 
         # get model configuration and sources
-        from pylyngdorf.models import get_model_config
-        from pylyngdorf.models import AUDIO_INPUTS as SOURCES
+        from .pylyngdorf.models import get_model_config
+        from .pylyngdorf.models import AUDIO_INPUTS as SOURCES
 
         self._manufacturer = 'Lyngdorf'
         self._default_sources = SOURCES

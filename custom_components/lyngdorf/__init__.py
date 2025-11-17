@@ -32,7 +32,7 @@ async def connect_to_device(hass: HomeAssistant, entry: ConfigEntry):
     model_id = config[CONF_MODEL]
 
     try:
-        from pylyngdorf import async_get_lyngdorf
+        from .pylyngdorf import async_get_lyngdorf
         client = await async_get_lyngdorf(
             model_id, url, hass.loop, **get_connection_overrides(config)
         )
