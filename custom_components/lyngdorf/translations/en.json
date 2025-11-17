@@ -1,0 +1,22 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lyngdorf",
+        "description": "Setup Lyngdorf equipment and communication settings",
+        "data": {
+          "model_id": "Model of Lyngdorf equipment",
+          "url": "URL in pyserial-style for local tty path or socket for remote host:port",
+          "baud": "[Optional] Override equipment's default baud rate (only for locally attached tty path)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  }
+}

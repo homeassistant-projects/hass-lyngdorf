@@ -1,0 +1,22 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lyngdorf",
+        "description": "Richten Sie Lyngdorf-Geräte und Kommunikationseinstellungen ein",
+        "data": {
+          "model_id": "Modell einer Lyngdorf-Ausrüstung",
+          "url": "URL im pyserial stil für den lokalen TTY-pfad oder socket für den remote-host:port",
+          "baud": "[Optional] Standard-Baudrate des Geräts überschreiben (nur für lokal angeschlossenen TTY-Pfad)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  }
+}
