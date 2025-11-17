@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Konfigurera Lyngdorf",
+        "description": "Konfigurera din Lyngdorf-ljudprocessor",
+        "data": {
+          "model_id": "Lyngdorf-modell",
+          "url": "Anslutnings-URL (t.ex. socket://192.168.1.100:84 eller /dev/ttyUSB0)",
+          "baudrate": "Baudhastighet (för RS232-seriella anslutningar)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kunde inte ansluta till enheten",
+      "unsupported": "Enhetsmodellen stöds inte",
+      "unknown": "Oväntat fel uppstod"
+    },
+    "abort": {
+      "already_configured": "Enheten är redan konfigurerad"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Konfigurera Lyngdorf",
+        "menu_options": {
+          "connection": "Anslutningsinställningar",
+          "sources": "Källnamn",
+          "zone2": "Zon 2-konfiguration"
+        }
+      },
+      "connection": {
+        "title": "Anslutningsinställningar",
+        "description": "Konfigurera hur Home Assistant ansluter till din Lyngdorf-processor",
+        "data": {
+          "url": "Anslutnings-URL",
+          "baudrate": "Baudhastighet"
+        }
+      },
+      "sources": {
+        "title": "Källnamn",
+        "description": "Anpassa namnen på dina ljudkällor. Lämna tomt för att använda standardnamn."
+      },
+      "zone2": {
+        "title": "Zon 2-konfiguration",
+        "description": "Konfigurera Zon 2-inställningar. Maximal volym är en säkerhetsgräns i dB.",
+        "data": {
+          "zone2_enabled": "Aktivera Zon 2",
+          "zone2_default_source": "Standardkälla för Zon 2",
+          "zone2_max_volume": "Maximal volym (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect-position"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect-voicing"
+      },
+      "audio_mode": {
+        "name": "Ljudläge"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Basjustering"
+      },
+      "trim_treble": {
+        "name": "Diskantjustering"
+      },
+      "trim_center": {
+        "name": "Centerjustering"
+      },
+      "trim_lfe": {
+        "name": "LFE-justering"
+      },
+      "trim_surrounds": {
+        "name": "Surroundjustering"
+      },
+      "trim_height": {
+        "name": "Höjdjustering"
+      },
+      "lipsync": {
+        "name": "Läppsynkroniseringsfördröjning"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Ljudformat"
+      },
+      "video_input": {
+        "name": "Videoingång"
+      },
+      "video_output": {
+        "name": "Videoutgång"
+      }
+    }
+  }
+}

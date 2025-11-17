@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "配置 Lyngdorf",
+        "description": "设置您的 Lyngdorf 音频处理器",
+        "data": {
+          "model_id": "Lyngdorf 型号",
+          "url": "连接 URL（例如 socket://192.168.1.100:84 或 /dev/ttyUSB0）",
+          "baudrate": "波特率（用于 RS232 串行连接）"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "无法连接到设备",
+      "unsupported": "不支持的设备型号",
+      "unknown": "发生意外错误"
+    },
+    "abort": {
+      "already_configured": "设备已配置"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "配置 Lyngdorf",
+        "menu_options": {
+          "connection": "连接设置",
+          "sources": "音源名称",
+          "zone2": "区域 2 配置"
+        }
+      },
+      "connection": {
+        "title": "连接设置",
+        "description": "配置 Home Assistant 如何连接到您的 Lyngdorf 处理器",
+        "data": {
+          "url": "连接 URL",
+          "baudrate": "波特率"
+        }
+      },
+      "sources": {
+        "title": "音源名称",
+        "description": "自定义音频源的名称。留空以使用默认名称。"
+      },
+      "zone2": {
+        "title": "区域 2 配置",
+        "description": "配置区域 2 设置。最大音量是以 dB 为单位的安全限制。",
+        "data": {
+          "zone2_enabled": "启用区域 2",
+          "zone2_default_source": "区域 2 的默认音源",
+          "zone2_max_volume": "最大音量（dB）"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect 位置"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect 声音"
+      },
+      "audio_mode": {
+        "name": "音频模式"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "低音调整"
+      },
+      "trim_treble": {
+        "name": "高音调整"
+      },
+      "trim_center": {
+        "name": "中置调整"
+      },
+      "trim_lfe": {
+        "name": "LFE 调整"
+      },
+      "trim_surrounds": {
+        "name": "环绕调整"
+      },
+      "trim_height": {
+        "name": "高度调整"
+      },
+      "lipsync": {
+        "name": "唇音同步延迟"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "音频格式"
+      },
+      "video_input": {
+        "name": "视频输入"
+      },
+      "video_output": {
+        "name": "视频输出"
+      }
+    }
+  }
+}
