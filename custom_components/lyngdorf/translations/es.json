@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurar Lyngdorf",
+        "description": "Configure su procesador de audio Lyngdorf",
+        "data": {
+          "model_id": "Modelo Lyngdorf",
+          "url": "URL de conexión (p. ej., socket://192.168.1.100:84 o /dev/ttyUSB0)",
+          "baudrate": "Velocidad en baudios (para conexiones serie RS232)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Error al conectar con el dispositivo",
+      "unsupported": "Modelo de dispositivo no compatible",
+      "unknown": "Error inesperado"
+    },
+    "abort": {
+      "already_configured": "El dispositivo ya está configurado"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configurar Lyngdorf",
+        "menu_options": {
+          "connection": "Ajustes de conexión",
+          "sources": "Nombres de fuentes",
+          "zone2": "Configuración de Zona 2"
+        }
+      },
+      "connection": {
+        "title": "Ajustes de conexión",
+        "description": "Configure cómo Home Assistant se conecta a su procesador Lyngdorf",
+        "data": {
+          "url": "URL de conexión",
+          "baudrate": "Velocidad en baudios"
+        }
+      },
+      "sources": {
+        "title": "Nombres de fuentes",
+        "description": "Personalice los nombres de sus fuentes de audio. Dejar en blanco para usar nombres predeterminados."
+      },
+      "zone2": {
+        "title": "Configuración de Zona 2",
+        "description": "Configure los ajustes de Zona 2. El volumen máximo es un límite de seguridad en dB.",
+        "data": {
+          "zone2_enabled": "Habilitar Zona 2",
+          "zone2_default_source": "Fuente predeterminada para Zona 2",
+          "zone2_max_volume": "Volumen máximo (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "Posición RoomPerfect"
+      },
+      "roomperfect_voicing": {
+        "name": "Voicing RoomPerfect"
+      },
+      "audio_mode": {
+        "name": "Modo de audio"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Ajuste de graves"
+      },
+      "trim_treble": {
+        "name": "Ajuste de agudos"
+      },
+      "trim_center": {
+        "name": "Ajuste de central"
+      },
+      "trim_lfe": {
+        "name": "Ajuste LFE"
+      },
+      "trim_surrounds": {
+        "name": "Ajuste de envolventes"
+      },
+      "trim_height": {
+        "name": "Ajuste de alturas"
+      },
+      "lipsync": {
+        "name": "Retardo de sincronización labial"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Formato de audio"
+      },
+      "video_input": {
+        "name": "Entrada de vídeo"
+      },
+      "video_output": {
+        "name": "Salida de vídeo"
+      }
+    }
+  }
+}

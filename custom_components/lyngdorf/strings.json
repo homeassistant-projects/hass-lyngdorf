@@ -3,20 +3,21 @@
     "step": {
       "user": {
         "title": "Configure Lyngdorf",
+        "description": "Set up your Lyngdorf audio processor",
         "data": {
-          "name": "Name of the device",
           "model_id": "Lyngdorf model",
-          "url": "pySerial compatible URL (e.g. socket://host:port or /dev/ttyUSB0)",
-          "baud": "Baud rate (if connecting locally via RS232 /dev/tty)"
+          "url": "Connection URL (e.g., socket://192.168.1.100:84 or /dev/ttyUSB0)",
+          "baudrate": "Baud rate (for RS232 serial connections)"
         }
       }
     },
     "error": {
-      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
-      "unknown": "[%key:common::config_flow::error::unknown%]"
+      "cannot_connect": "Failed to connect to device",
+      "unsupported": "Unsupported device model",
+      "unknown": "Unexpected error occurred"
     },
     "abort": {
-      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+      "already_configured": "Device is already configured"
     }
   },
   "options": {
@@ -31,6 +32,7 @@
       },
       "connection": {
         "title": "Connection Settings",
+        "description": "Configure how Home Assistant connects to your Lyngdorf processor",
         "data": {
           "url": "Connection URL",
           "baudrate": "Baud Rate"
@@ -38,7 +40,7 @@
       },
       "sources": {
         "title": "Source Names",
-        "description": "Configure custom names for your sources. Leave blank to use defaults."
+        "description": "Customize the names of your audio sources. Leave blank to use default names."
       },
       "zone2": {
         "title": "Zone 2 Configuration",
@@ -48,6 +50,53 @@
           "zone2_default_source": "Default Source for Zone 2",
           "zone2_max_volume": "Maximum Volume (dB)"
         }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect position"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect voicing"
+      },
+      "audio_mode": {
+        "name": "Audio mode"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Bass trim"
+      },
+      "trim_treble": {
+        "name": "Treble trim"
+      },
+      "trim_center": {
+        "name": "Center trim"
+      },
+      "trim_lfe": {
+        "name": "LFE trim"
+      },
+      "trim_surrounds": {
+        "name": "Surround trim"
+      },
+      "trim_height": {
+        "name": "Height trim"
+      },
+      "lipsync": {
+        "name": "Lip sync delay"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Audio format"
+      },
+      "video_input": {
+        "name": "Video input"
+      },
+      "video_output": {
+        "name": "Video output"
       }
     }
   }

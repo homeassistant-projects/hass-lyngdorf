@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurer Lyngdorf",
+        "description": "Configurez votre processeur audio Lyngdorf",
+        "data": {
+          "model_id": "Modèle Lyngdorf",
+          "url": "URL de connexion (par ex., socket://192.168.1.100:84 ou /dev/ttyUSB0)",
+          "baudrate": "Débit en bauds (pour les connexions série RS232)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Échec de la connexion à l'appareil",
+      "unsupported": "Modèle d'appareil non pris en charge",
+      "unknown": "Erreur inattendue"
+    },
+    "abort": {
+      "already_configured": "L'appareil est déjà configuré"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configurer Lyngdorf",
+        "menu_options": {
+          "connection": "Paramètres de connexion",
+          "sources": "Noms des sources",
+          "zone2": "Configuration de la zone 2"
+        }
+      },
+      "connection": {
+        "title": "Paramètres de connexion",
+        "description": "Configurez la façon dont Home Assistant se connecte à votre processeur Lyngdorf",
+        "data": {
+          "url": "URL de connexion",
+          "baudrate": "Débit en bauds"
+        }
+      },
+      "sources": {
+        "title": "Noms des sources",
+        "description": "Personnalisez les noms de vos sources audio. Laissez vide pour utiliser les noms par défaut."
+      },
+      "zone2": {
+        "title": "Configuration de la zone 2",
+        "description": "Configurez les paramètres de la zone 2. Le volume maximum est une limite de sécurité en dB.",
+        "data": {
+          "zone2_enabled": "Activer la zone 2",
+          "zone2_default_source": "Source par défaut pour la zone 2",
+          "zone2_max_volume": "Volume maximum (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "Position RoomPerfect"
+      },
+      "roomperfect_voicing": {
+        "name": "Voicing RoomPerfect"
+      },
+      "audio_mode": {
+        "name": "Mode audio"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Réglage des graves"
+      },
+      "trim_treble": {
+        "name": "Réglage des aigus"
+      },
+      "trim_center": {
+        "name": "Réglage du centre"
+      },
+      "trim_lfe": {
+        "name": "Réglage LFE"
+      },
+      "trim_surrounds": {
+        "name": "Réglage des surround"
+      },
+      "trim_height": {
+        "name": "Réglage des hauteurs"
+      },
+      "lipsync": {
+        "name": "Délai de synchronisation labiale"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Format audio"
+      },
+      "video_input": {
+        "name": "Entrée vidéo"
+      },
+      "video_output": {
+        "name": "Sortie vidéo"
+      }
+    }
+  }
+}

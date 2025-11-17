@@ -20,19 +20,34 @@ Control your Lyngdorf audio/video processor from Home Assistant via RS232 or IP 
 
 ## Features
 
+### Media Player Controls
 - Full media player control (power, volume, mute, source selection)
 - Custom source naming via UI configuration
-- Zone 2 support
+- Zone 2 support with independent control
+- Dynamic source discovery
+
+### Audio Processing
+- **RoomPerfect Controls** - Select entities for focus positions and voicings
+- **Audio Mode Selection** - Choose processing modes via select entity
+- **Channel Trim Controls** - Fine-tune bass, treble, center, LFE, surround, and height channels
+- **Lip Sync Adjustment** - Precise delay control in milliseconds
+- **Loudness Control** - Toggle loudness compensation
+- **DTS Dialog Control** (MP-60 only) - Enhance dialog clarity
+
+### Real-time State Updates
+- Callback-based push notifications from device
+- Efficient DataUpdateCoordinator pattern
+- Immediate UI updates when device state changes
+
+### Information Sensors
+- Audio format sensor (codec, sample rate, channels)
+- Video input sensor
+- Video output sensor
+
+### Connection
 - RS232 serial and IP/socket connection support
 - Config flow UI for easy setup
 - Options flow for reconfiguration
-- Dynamic source discovery
-- RoomPerfect audio correction control
-- Audio mode selection
-- Channel trim controls (bass, treble, center, LFE, surrounds, height)
-- Lipsync delay adjustment
-- Loudness control
-- DTS Dialog Control (MP-60 only)
 - Volume range: -99.9 to +20.0 dB (MP-50) or +24.0 dB (MP-60)
 
 ## Supported Devices
@@ -80,17 +95,25 @@ No `configuration.yaml` entries are required.
 
 ## Supported Controls
 
-| Feature | Main Zone | Zone 2 |
-|---------|-----------|--------|
-| Power On/Off | ✅ | ✅ (via library) |
-| Volume Control | ✅ (dB scale) | ✅ (via library) |
-| Mute | ✅ | ✅ (via library) |
-| Source Selection | ✅ | ✅ (via library) |
-| RoomPerfect | ✅ (via library) | - |
-| Audio Modes | ✅ (via library) | - |
-| Channel Trim | ✅ (via library) | - |
-
-**Note:** Zone 2 and advanced controls are available through the Python library but not all are exposed in the HA UI yet.
+| Feature | Entity Type | Main Zone | Zone 2 |
+|---------|-------------|-----------|--------|
+| Power On/Off | media_player | ✅ | ✅ |
+| Volume Control | media_player | ✅ (dB scale) | ✅ |
+| Mute | media_player | ✅ | ✅ |
+| Source Selection | media_player | ✅ | ✅ |
+| RoomPerfect Position | select | ✅ | - |
+| RoomPerfect Voicing | select | ✅ | - |
+| Audio Mode | select | ✅ | - |
+| Bass Trim | number | ✅ | - |
+| Treble Trim | number | ✅ | - |
+| Center Trim | number | ✅ | - |
+| LFE Trim | number | ✅ | - |
+| Surround Trim | number | ✅ | - |
+| Height Trim | number | ✅ | - |
+| Lip Sync Delay | number | ✅ | - |
+| Audio Format | sensor | ✅ | - |
+| Video Input | sensor | ✅ | - |
+| Video Output | sensor | ✅ | - |
 
 ## Source Inputs
 
@@ -131,9 +154,19 @@ This integration uses an embedded Python library for communication:
 ### pylyngdorf (Lyngdorf Control)
 - Lyngdorf RS232/IP protocol implementation
 - Async/await support for Home Assistant
+- **Callback-based state updates** - Real-time push notifications from device
+- **DataUpdateCoordinator** - Efficient state management following HA 2025 best practices
 - Handles verbosity levels and echo filtering
 - RoomPerfect and advanced audio controls
 - Model-specific configurations (MP-50/MP-60)
+- Custom exception hierarchy for robust error handling
+- Dataclass-based state representation for type safety
+
+### Architecture
+- **Protocol Layer** - Handles RS232/IP communication and parses unsolicited device updates
+- **Device API** - Clean, typed interface to device controls
+- **Coordinator** - Manages state updates and entity refresh
+- **Entity Platforms** - media_player, select, number, and sensor entities
 
 ## See Also
 
