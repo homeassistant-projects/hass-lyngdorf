@@ -10,6 +10,8 @@
 [![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://buymeacoffee.com/DYks67r)
 [![Support on Patreon][patreon-shield]][patreon]
 
+![Lyngdorf Logo](https://github.com/homeassistant-projects/hass-lyngdorf/blob/main/brands/logo.png?raw=true)
+
 Control your Lyngdorf audio/video processor from Home Assistant via RS232 or IP connection.
 
 ## Status
