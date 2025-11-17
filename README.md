@@ -50,16 +50,17 @@ Make sure that [Home Assistant Community Store (HACS)](https://github.com/custom
 
 ### Step 2: Configuration
 
-This integration is completely configured via config flow.
+This integration is completely configured via the Home Assistant UI using config flow:
 
-#### Example configuration.yaml:
+1. Go to **Settings** → **Devices & Services**
+2. Click **+ Add Integration**
+3. Search for and select **Lyngdorf**
+4. Follow the prompts to configure your device:
+   - Select your Lyngdorf model (MP-50 or MP-60)
+   - Enter the connection URL (e.g., `socket://192.168.1.100:84` for network, or `/dev/ttyUSB0` for serial)
+   - Optionally set a custom baud rate if using RS232
 
-```yaml
-media_player:
-  - platform: lyngdorf
-    model: mp60
-    url: socket://192.168.1.100:84
-```
+No `configuration.yaml` entries are required.
 
 ## Hardware Requirements
 
