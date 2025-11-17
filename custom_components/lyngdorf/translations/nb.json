@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Konfigurer Lyngdorf",
+        "description": "Sett opp din Lyngdorf-lydprosessor",
+        "data": {
+          "model_id": "Lyngdorf-modell",
+          "url": "Tilkoblings-URL (f.eks. socket://192.168.1.100:84 eller /dev/ttyUSB0)",
+          "baudrate": "Baudhastighet (for RS232-serielle tilkoblinger)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kunne ikke koble til enheten",
+      "unsupported": "Enhetsmodellen støttes ikke",
+      "unknown": "Uventet feil oppstod"
+    },
+    "abort": {
+      "already_configured": "Enheten er allerede konfigurert"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Konfigurer Lyngdorf",
+        "menu_options": {
+          "connection": "Tilkoblingsinnstillinger",
+          "sources": "Kildenavn",
+          "zone2": "Sone 2-konfigurasjon"
+        }
+      },
+      "connection": {
+        "title": "Tilkoblingsinnstillinger",
+        "description": "Konfigurer hvordan Home Assistant kobler til din Lyngdorf-prosessor",
+        "data": {
+          "url": "Tilkoblings-URL",
+          "baudrate": "Baudhastighet"
+        }
+      },
+      "sources": {
+        "title": "Kildenavn",
+        "description": "Tilpass navnene på lydkildene dine. La stå tomt for å bruke standardnavn."
+      },
+      "zone2": {
+        "title": "Sone 2-konfigurasjon",
+        "description": "Konfigurer Sone 2-innstillinger. Maksimalt volum er en sikkerhetsgrense i dB.",
+        "data": {
+          "zone2_enabled": "Aktiver Sone 2",
+          "zone2_default_source": "Standardkilde for Sone 2",
+          "zone2_max_volume": "Maksimalt volum (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect-posisjon"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect-voicing"
+      },
+      "audio_mode": {
+        "name": "Lydmodus"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Bassjustering"
+      },
+      "trim_treble": {
+        "name": "Diskantjustering"
+      },
+      "trim_center": {
+        "name": "Senterjustering"
+      },
+      "trim_lfe": {
+        "name": "LFE-justering"
+      },
+      "trim_surrounds": {
+        "name": "Surroundjustering"
+      },
+      "trim_height": {
+        "name": "Høydejustering"
+      },
+      "lipsync": {
+        "name": "Leppesynkroniseringsforsinkelse"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Lydformat"
+      },
+      "video_input": {
+        "name": "Videoinngang"
+      },
+      "video_output": {
+        "name": "Videoutgang"
+      }
+    }
+  }
+}

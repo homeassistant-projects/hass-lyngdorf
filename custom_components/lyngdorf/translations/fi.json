@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Määritä Lyngdorf",
+        "description": "Määritä Lyngdorf-ääniprosessorisi",
+        "data": {
+          "model_id": "Lyngdorf-malli",
+          "url": "Yhteyden URL (esim. socket://192.168.1.100:84 tai /dev/ttyUSB0)",
+          "baudrate": "Siirtonopeus (RS232-sarjaliitäntäyhteyksille)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Yhteyden muodostaminen laitteeseen epäonnistui",
+      "unsupported": "Laitteen mallia ei tueta",
+      "unknown": "Odottamaton virhe"
+    },
+    "abort": {
+      "already_configured": "Laite on jo määritetty"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Määritä Lyngdorf",
+        "menu_options": {
+          "connection": "Yhteysasetukset",
+          "sources": "Lähteiden nimet",
+          "zone2": "Vyöhyke 2 -asetukset"
+        }
+      },
+      "connection": {
+        "title": "Yhteysasetukset",
+        "description": "Määritä, miten Home Assistant yhdistää Lyngdorf-prosessoriisi",
+        "data": {
+          "url": "Yhteyden URL",
+          "baudrate": "Siirtonopeus"
+        }
+      },
+      "sources": {
+        "title": "Lähteiden nimet",
+        "description": "Mukauta äänilähteidesi nimet. Jätä tyhjäksi käyttääksesi oletusnimia."
+      },
+      "zone2": {
+        "title": "Vyöhyke 2 -asetukset",
+        "description": "Määritä vyöhyke 2:n asetukset. Enimmäisäänenvoimakkuus on turvaraja desibeleinä.",
+        "data": {
+          "zone2_enabled": "Ota vyöhyke 2 käyttöön",
+          "zone2_default_source": "Oletuslähde vyöhykkeelle 2",
+          "zone2_max_volume": "Enimmäisäänenvoimakkuus (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect-sijainti"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect-äänitys"
+      },
+      "audio_mode": {
+        "name": "Äänitila"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Basson säätö"
+      },
+      "trim_treble": {
+        "name": "Diskantin säätö"
+      },
+      "trim_center": {
+        "name": "Keskikanavan säätö"
+      },
+      "trim_lfe": {
+        "name": "LFE-säätö"
+      },
+      "trim_surrounds": {
+        "name": "Surround-säätö"
+      },
+      "trim_height": {
+        "name": "Korkeus-säätö"
+      },
+      "lipsync": {
+        "name": "Huulten synkronointiviive"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Äänimuoto"
+      },
+      "video_input": {
+        "name": "Videotulo"
+      },
+      "video_output": {
+        "name": "Videolähtö"
+      }
+    }
+  }
+}
