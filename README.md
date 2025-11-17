@@ -137,9 +137,10 @@ This integration uses an embedded Python library for communication:
 
 ## See Also
 
-* [pylyngdorf library](pylyngdorf/) - Standalone Python library for Lyngdorf control
-* [Lyngdorf RS232 Protocol](pylyngdorf/models.py) - Command reference
-* [Example Usage](pylyngdorf/example-async.py) - Python library examples
+* [pylyngdorf library](custom_components/lyngdorf/pylyngdorf/) - Embedded Python library for Lyngdorf control
+* [Lyngdorf RS232 Protocol](custom_components/lyngdorf/pylyngdorf/models.py) - Command reference
+* [Example Usage](custom_components/lyngdorf/pylyngdorf/example-async.py) - Python library examples
+* [fishloa/lyngdorf](https://github.com/fishloa/lyngdorf) - Alternative Lyngdorf integration
 
 
 
