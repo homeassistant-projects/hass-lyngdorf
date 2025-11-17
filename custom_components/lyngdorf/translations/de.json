@@ -2,21 +2,102 @@
   "config": {
     "step": {
       "user": {
-        "title": "Lyngdorf",
-        "description": "Richten Sie Lyngdorf-Geräte und Kommunikationseinstellungen ein",
+        "title": "Lyngdorf konfigurieren",
+        "description": "Richten Sie Ihren Lyngdorf-Audioprozessor ein",
         "data": {
-          "model_id": "Modell einer Lyngdorf-Ausrüstung",
-          "url": "URL im pyserial stil für den lokalen TTY-pfad oder socket für den remote-host:port",
-          "baud": "[Optional] Standard-Baudrate des Geräts überschreiben (nur für lokal angeschlossenen TTY-Pfad)"
+          "model_id": "Lyngdorf-Modell",
+          "url": "Verbindungs-URL (z.B. socket://192.168.1.100:84 oder /dev/ttyUSB0)",
+          "baudrate": "Baudrate (für serielle RS232-Verbindungen)"
         }
       }
     },
     "error": {
-      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
-      "unknown": "[%key:common::config_flow::error::unknown%]"
+      "cannot_connect": "Verbindung zum Gerät fehlgeschlagen",
+      "unsupported": "Nicht unterstütztes Gerätemodell",
+      "unknown": "Unerwarteter Fehler aufgetreten"
     },
     "abort": {
-      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+      "already_configured": "Gerät ist bereits konfiguriert"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Lyngdorf konfigurieren",
+        "menu_options": {
+          "connection": "Verbindungseinstellungen",
+          "sources": "Quellennamen",
+          "zone2": "Zone 2 Konfiguration"
+        }
+      },
+      "connection": {
+        "title": "Verbindungseinstellungen",
+        "description": "Konfigurieren Sie, wie Home Assistant sich mit Ihrem Lyngdorf-Prozessor verbindet",
+        "data": {
+          "url": "Verbindungs-URL",
+          "baudrate": "Baudrate"
+        }
+      },
+      "sources": {
+        "title": "Quellennamen",
+        "description": "Passen Sie die Namen Ihrer Audioquellen an. Leer lassen, um Standardnamen zu verwenden."
+      },
+      "zone2": {
+        "title": "Zone 2 Konfiguration",
+        "description": "Konfigurieren Sie Zone 2 Einstellungen. Maximale Lautstärke ist eine Sicherheitsgrenze in dB.",
+        "data": {
+          "zone2_enabled": "Zone 2 aktivieren",
+          "zone2_default_source": "Standardquelle für Zone 2",
+          "zone2_max_volume": "Maximale Lautstärke (dB)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "roomperfect_position": {
+        "name": "RoomPerfect-Position"
+      },
+      "roomperfect_voicing": {
+        "name": "RoomPerfect-Voicing"
+      },
+      "audio_mode": {
+        "name": "Audiomodus"
+      }
+    },
+    "number": {
+      "trim_bass": {
+        "name": "Bass-Anpassung"
+      },
+      "trim_treble": {
+        "name": "Höhen-Anpassung"
+      },
+      "trim_center": {
+        "name": "Center-Anpassung"
+      },
+      "trim_lfe": {
+        "name": "LFE-Anpassung"
+      },
+      "trim_surrounds": {
+        "name": "Surround-Anpassung"
+      },
+      "trim_height": {
+        "name": "Höhen-Lautsprecher-Anpassung"
+      },
+      "lipsync": {
+        "name": "Lippensynchronisationsverzögerung"
+      }
+    },
+    "sensor": {
+      "audio_format": {
+        "name": "Audioformat"
+      },
+      "video_input": {
+        "name": "Videoeingang"
+      },
+      "video_output": {
+        "name": "Videoausgang"
+      }
     }
   }
 }

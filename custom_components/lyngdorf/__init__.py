@@ -13,11 +13,17 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
 from .const import CONF_MODEL, CONF_URL, DOMAIN
+from .coordinator import LyngdorfCoordinator
 from .utils import get_connection_overrides
 
 LOG = logging.getLogger(__name__)
 
-PLATFORMS = [Platform.MEDIA_PLAYER]
+PLATFORMS = [
+    Platform.MEDIA_PLAYER,
+    Platform.SELECT,
+    Platform.NUMBER,
+    Platform.SENSOR,
+]
 
 
 @dataclass
@@ -27,6 +33,7 @@ class DeviceClientDetails:
 
 
 async def connect_to_device(hass: HomeAssistant, entry: ConfigEntry):
+    """Connect to device and create coordinator."""
     config = entry.data
     url = config[CONF_URL]
     model_id = config[CONF_MODEL]
@@ -39,8 +46,18 @@ async def connect_to_device(hass: HomeAssistant, entry: ConfigEntry):
     except Exception as e:
         raise ConfigEntryNotReady(f'Connection failed to {model_id} @ {url}') from e
 
+    # create coordinator for state management
+    coordinator = LyngdorfCoordinator(hass, client, model_id)
+
+    # perform initial data fetch
+    await coordinator.async_config_entry_first_refresh()
+
     # save under the entry id so multiple devices can be added to a single HASS
-    hass.data[DOMAIN][entry.entry_id] = DeviceClientDetails(client, config)
+    hass.data[DOMAIN][entry.entry_id] = {
+        'client': client,
+        'config': config,
+        'coordinator': coordinator,
+    }
 
 
 async def config_update_listener(hass: HomeAssistant, config_entry: ConfigEntry):

@@ -39,8 +39,15 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    if data := hass.data[DOMAIN][config_entry.entry_id]:
-        entities = [LyngdorfMediaPlayer(config_entry, data, zone='main')]
+    """Set up Lyngdorf media player entities."""
+    data = hass.data[DOMAIN][config_entry.entry_id]
+
+    if data:
+        # create DeviceClientDetails for backward compatibility
+        from . import DeviceClientDetails
+        details = DeviceClientDetails(data['client'], data['config'])
+
+        entities = [LyngdorfMediaPlayer(config_entry, details, zone='main')]
 
         # check if zone 2 is enabled in options or data
         zone2_enabled = config_entry.options.get(
@@ -49,7 +56,7 @@ async def async_setup_entry(
         )
 
         if zone2_enabled:
-            entities.append(LyngdorfMediaPlayer(config_entry, data, zone='zone2'))
+            entities.append(LyngdorfMediaPlayer(config_entry, details, zone='zone2'))
 
         async_add_entities(new_entities=entities, update_before_add=True)
     else:
