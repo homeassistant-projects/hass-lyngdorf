@@ -1,15 +1,16 @@
 """Select entities for Lyngdorf integration."""
 
+from __future__ import annotations
+
 import logging
-from typing import Any
 
 from homeassistant.components.select import SelectEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from . import LyngdorfConfigEntry
 from .const import DOMAIN
 from .coordinator import LyngdorfCoordinator
 
@@ -18,11 +19,11 @@ LOG = logging.getLogger(__name__)
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
+    entry: LyngdorfConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Lyngdorf select entities."""
-    coordinator: LyngdorfCoordinator = hass.data[DOMAIN][config_entry.entry_id]['coordinator']
+    coordinator = entry.runtime_data.coordinator
     client = coordinator.client
 
     entities: list[SelectEntity] = []
@@ -30,23 +31,17 @@ async def async_setup_entry(
     # discover RoomPerfect positions
     positions = await client.roomperfect.discover_positions()
     if positions:
-        entities.append(
-            LyngdorfRoomPerfectPositionSelect(coordinator, config_entry, positions)
-        )
+        entities.append(LyngdorfRoomPerfectPositionSelect(coordinator, positions))
 
     # discover RoomPerfect voicings
     voicings = await client.roomperfect.discover_voicings()
     if voicings:
-        entities.append(
-            LyngdorfRoomPerfectVoicingSelect(coordinator, config_entry, voicings)
-        )
+        entities.append(LyngdorfRoomPerfectVoicingSelect(coordinator, voicings))
 
     # discover audio modes
     audio_modes = await client.audio_mode.discover()
     if audio_modes:
-        entities.append(
-            LyngdorfAudioModeSelect(coordinator, config_entry, audio_modes)
-        )
+        entities.append(LyngdorfAudioModeSelect(coordinator, audio_modes))
 
     if entities:
         async_add_entities(entities, update_before_add=True)
@@ -60,12 +55,10 @@ class LyngdorfSelectEntity(CoordinatorEntity[LyngdorfCoordinator], SelectEntity)
     def __init__(
         self,
         coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
         entity_type: str,
     ) -> None:
         """Initialize the select entity."""
         super().__init__(coordinator)
-        self._config_entry = config_entry
         self._attr_unique_id = f'{DOMAIN}_{coordinator.model_id}_{entity_type}'.lower()
 
         model_name = coordinator.client._model_config['name']
@@ -85,11 +78,10 @@ class LyngdorfRoomPerfectPositionSelect(LyngdorfSelectEntity):
     def __init__(
         self,
         coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
         positions: dict[int, str],
     ) -> None:
         """Initialize RoomPerfect position select."""
-        super().__init__(coordinator, config_entry, 'roomperfect_position')
+        super().__init__(coordinator, 'roomperfect_position')
         self._positions = positions
         self._position_name_to_id = {name: idx for idx, name in positions.items()}
         self._attr_options = list(self._position_name_to_id.keys())
@@ -117,11 +109,10 @@ class LyngdorfRoomPerfectVoicingSelect(LyngdorfSelectEntity):
     def __init__(
         self,
         coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
         voicings: dict[int, str],
     ) -> None:
         """Initialize RoomPerfect voicing select."""
-        super().__init__(coordinator, config_entry, 'roomperfect_voicing')
+        super().__init__(coordinator, 'roomperfect_voicing')
         self._voicings = voicings
         self._voicing_name_to_id = {name: idx for idx, name in voicings.items()}
         self._attr_options = list(self._voicing_name_to_id.keys())
@@ -149,11 +140,10 @@ class LyngdorfAudioModeSelect(LyngdorfSelectEntity):
     def __init__(
         self,
         coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
         modes: dict[int, str],
     ) -> None:
         """Initialize audio mode select."""
-        super().__init__(coordinator, config_entry, 'audio_mode')
+        super().__init__(coordinator, 'audio_mode')
         self._modes = modes
         self._mode_name_to_id = {name: idx for idx, name in modes.items()}
         self._attr_options = list(self._mode_name_to_id.keys())

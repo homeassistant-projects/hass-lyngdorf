@@ -1,11 +1,13 @@
 {
     "domain": "lyngdorf",
     "name": "Lyngdorf A/V Control",
+    "version": "0.3.0",
     "codeowners": ["@rsnodgrass"],
     "config_flow": true,
     "documentation": "https://github.com/homeassistant-projects/hass-lyngdorf",
+    "homeassistant": "2025.2.0",
+    "integration_type": "device",
     "iot_class": "local_push",
     "issue_tracker": "https://github.com/homeassistant-projects/hass-lyngdorf/issues",
-    "requirements": ["pyserial>=3.5", "pyserial-asyncio>=0.6"],
-    "version": "0.2.0"
+    "requirements": ["pyserial>=3.5", "pyserial-asyncio>=0.6"]
 }

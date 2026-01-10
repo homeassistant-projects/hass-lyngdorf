@@ -1,16 +1,17 @@
 """Number entities for Lyngdorf integration."""
 
+from __future__ import annotations
+
 import logging
-from typing import Any
 
 from homeassistant.components.number import NumberEntity, NumberMode
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfSoundPressure, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from . import LyngdorfConfigEntry
 from .const import DOMAIN
 from .coordinator import LyngdorfCoordinator
 
@@ -19,20 +20,20 @@ LOG = logging.getLogger(__name__)
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
+    entry: LyngdorfConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Lyngdorf number entities."""
-    coordinator: LyngdorfCoordinator = hass.data[DOMAIN][config_entry.entry_id]['coordinator']
+    coordinator = entry.runtime_data.coordinator
 
     entities: list[NumberEntity] = [
-        LyngdorfTrimBassNumber(coordinator, config_entry),
-        LyngdorfTrimTrebleNumber(coordinator, config_entry),
-        LyngdorfTrimCenterNumber(coordinator, config_entry),
-        LyngdorfTrimLFENumber(coordinator, config_entry),
-        LyngdorfTrimSurroundsNumber(coordinator, config_entry),
-        LyngdorfTrimHeightNumber(coordinator, config_entry),
-        LyngdorfLipsyncNumber(coordinator, config_entry),
+        LyngdorfTrimBassNumber(coordinator),
+        LyngdorfTrimTrebleNumber(coordinator),
+        LyngdorfTrimCenterNumber(coordinator),
+        LyngdorfTrimLFENumber(coordinator),
+        LyngdorfTrimSurroundsNumber(coordinator),
+        LyngdorfTrimHeightNumber(coordinator),
+        LyngdorfLipsyncNumber(coordinator),
     ]
 
     async_add_entities(entities, update_before_add=True)
@@ -47,12 +48,10 @@ class LyngdorfNumberEntity(CoordinatorEntity[LyngdorfCoordinator], NumberEntity)
     def __init__(
         self,
         coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
         entity_type: str,
     ) -> None:
         """Initialize the number entity."""
         super().__init__(coordinator)
-        self._config_entry = config_entry
         self._attr_unique_id = f'{DOMAIN}_{coordinator.model_id}_{entity_type}'.lower()
 
         model_name = coordinator.client._model_config['name']
@@ -73,13 +72,9 @@ class LyngdorfTrimBassNumber(LyngdorfNumberEntity):
     _attr_native_step = 0.5
     _attr_native_unit_of_measurement = UnitOfSoundPressure.DECIBEL
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize bass trim number."""
-        super().__init__(coordinator, config_entry, 'trim_bass')
+        super().__init__(coordinator, 'trim_bass')
 
     @property
     def native_value(self) -> float | None:
@@ -103,13 +98,9 @@ class LyngdorfTrimTrebleNumber(LyngdorfNumberEntity):
     _attr_native_step = 0.5
     _attr_native_unit_of_measurement = UnitOfSoundPressure.DECIBEL
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize treble trim number."""
-        super().__init__(coordinator, config_entry, 'trim_treble')
+        super().__init__(coordinator, 'trim_treble')
 
     @property
     def native_value(self) -> float | None:
@@ -133,13 +124,9 @@ class LyngdorfTrimCenterNumber(LyngdorfNumberEntity):
     _attr_native_step = 0.5
     _attr_native_unit_of_measurement = UnitOfSoundPressure.DECIBEL
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize center trim number."""
-        super().__init__(coordinator, config_entry, 'trim_center')
+        super().__init__(coordinator, 'trim_center')
 
     @property
     def native_value(self) -> float | None:
@@ -163,13 +150,9 @@ class LyngdorfTrimLFENumber(LyngdorfNumberEntity):
     _attr_native_step = 0.5
     _attr_native_unit_of_measurement = UnitOfSoundPressure.DECIBEL
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize LFE trim number."""
-        super().__init__(coordinator, config_entry, 'trim_lfe')
+        super().__init__(coordinator, 'trim_lfe')
 
     @property
     def native_value(self) -> float | None:
@@ -193,13 +176,9 @@ class LyngdorfTrimSurroundsNumber(LyngdorfNumberEntity):
     _attr_native_step = 0.5
     _attr_native_unit_of_measurement = UnitOfSoundPressure.DECIBEL
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize surrounds trim number."""
-        super().__init__(coordinator, config_entry, 'trim_surrounds')
+        super().__init__(coordinator, 'trim_surrounds')
 
     @property
     def native_value(self) -> float | None:
@@ -223,13 +202,9 @@ class LyngdorfTrimHeightNumber(LyngdorfNumberEntity):
     _attr_native_step = 0.5
     _attr_native_unit_of_measurement = UnitOfSoundPressure.DECIBEL
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize height trim number."""
-        super().__init__(coordinator, config_entry, 'trim_height')
+        super().__init__(coordinator, 'trim_height')
 
     @property
     def native_value(self) -> float | None:
@@ -253,13 +228,9 @@ class LyngdorfLipsyncNumber(LyngdorfNumberEntity):
     _attr_native_step = 5
     _attr_native_unit_of_measurement = UnitOfTime.MILLISECONDS
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize lipsync number."""
-        super().__init__(coordinator, config_entry, 'lipsync')
+        super().__init__(coordinator, 'lipsync')
 
     async def async_added_to_hass(self) -> None:
         """Query device for lipsync range."""

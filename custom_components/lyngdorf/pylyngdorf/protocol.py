@@ -6,10 +6,10 @@ import logging
 import re
 import time
 from collections.abc import Callable
-from typing import Optional
 
-from .exceptions import ConnectionError as LyngdorfConnectionError
-from .exceptions import TimeoutError as LyngdorfTimeoutError
+from .exceptions import (
+    TimeoutError as LyngdorfTimeoutError,
+)
 
 LOG = logging.getLogger(__name__)
 
@@ -44,6 +44,7 @@ async def async_get_protocol(
 
     def locked_method(method):
         """Decorator to ensure only one command is sent at a time."""
+
         @functools.wraps(method)
         async def wrapper(self, *method_args, **method_kwargs):
             async with self._lock:
@@ -53,6 +54,7 @@ async def async_get_protocol(
 
     def ensure_connected(method):
         """Decorator to check connection before sending."""
+
         @functools.wraps(method)
         async def wrapper(self, *method_args, **method_kwargs):
             try:
@@ -92,7 +94,7 @@ async def async_get_protocol(
 
             # callback system for unsolicited state updates
             self._state_callbacks: dict[str, list[Callable]] = {}
-            self._general_callback: Optional[Callable] = None
+            self._general_callback: Callable | None = None
 
             LOG.info(f'Lyngdorf protocol timeout set to {self._timeout}s')
 
@@ -108,7 +110,7 @@ async def async_get_protocol(
             self._general_callback = callback
             LOG.debug('Registered general state update callback')
 
-        def _parse_state_update(self, message: str) -> Optional[tuple[str, dict]]:
+        def _parse_state_update(self, message: str) -> tuple[str, dict] | None:
             """Parse message to extract state update information."""
             # try each pattern to identify the state type
             for state_type, pattern in STATE_UPDATE_PATTERNS.items():
@@ -186,7 +188,7 @@ async def async_get_protocol(
 
         @locked_method
         @ensure_connected
-        async def send(self, request: bytes, wait_for_reply: bool = True) -> Optional[str]:
+        async def send(self, request: bytes, wait_for_reply: bool = True) -> str | None:
             """Send command and optionally wait for response."""
             await self._throttle_requests()
 
@@ -225,10 +227,7 @@ async def async_get_protocol(
                             return ''
 
                         # filter out echo messages (# prefix) from verbosity level 2
-                        status_lines = [
-                            line for line in lines
-                            if not line.startswith(b'#')
-                        ]
+                        status_lines = [line for line in lines if not line.startswith(b'#')]
 
                         if not status_lines:
                             # only echo received, no status - wait for more data
@@ -240,13 +239,11 @@ async def async_get_protocol(
 
                         return status_lines[0].decode('ascii', errors='ignore')
 
-            except asyncio.TimeoutError as e:
+            except TimeoutError as e:
                 LOG.warning(
                     f'Timeout waiting for response to {request}: received={data} ({self._timeout}s)'
                 )
-                raise LyngdorfTimeoutError(
-                    f'Timeout waiting for response: {self._timeout}s'
-                ) from e
+                raise LyngdorfTimeoutError(f'Timeout waiting for response: {self._timeout}s') from e
 
     # create protocol factory
     factory = functools.partial(

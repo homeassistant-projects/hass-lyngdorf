@@ -1,18 +1,17 @@
-"""
-The Lyngdorf A/V integration.
-"""
+"""The Lyngdorf A/V integration."""
+
+from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
 from typing import Any
-from collections.abc import Mapping
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
-from .const import CONF_MODEL, CONF_URL, DOMAIN
+from .const import CONF_MODEL, DOMAIN as DOMAIN
 from .coordinator import LyngdorfCoordinator
 from .utils import get_connection_overrides
 
@@ -27,19 +26,26 @@ PLATFORMS = [
 
 
 @dataclass
-class DeviceClientDetails:
+class LyngdorfData:
+    """Runtime data for Lyngdorf integration."""
+
     client: Any  # LyngdorfAsync client
-    config: Mapping[str, Any]
+    config: dict[str, Any]
+    coordinator: LyngdorfCoordinator
 
 
-async def connect_to_device(hass: HomeAssistant, entry: ConfigEntry):
-    """Connect to device and create coordinator."""
+type LyngdorfConfigEntry = ConfigEntry[LyngdorfData]
+
+
+async def async_setup_entry(hass: HomeAssistant, entry: LyngdorfConfigEntry) -> bool:
+    """Set up Lyngdorf from a config entry."""
     config = entry.data
-    url = config[CONF_URL]
+    url = config.get('url', '')
     model_id = config[CONF_MODEL]
 
     try:
         from .pylyngdorf import async_get_lyngdorf
+
         client = await async_get_lyngdorf(
             model_id, url, hass.loop, **get_connection_overrides(config)
         )
@@ -52,36 +58,28 @@ async def connect_to_device(hass: HomeAssistant, entry: ConfigEntry):
     # perform initial data fetch
     await coordinator.async_config_entry_first_refresh()
 
-    # save under the entry id so multiple devices can be added to a single HASS
-    hass.data[DOMAIN][entry.entry_id] = {
-        'client': client,
-        'config': config,
-        'coordinator': coordinator,
-    }
-
-
-async def config_update_listener(hass: HomeAssistant, config_entry: ConfigEntry):
-    """Handle options update."""
-    LOG.info(f'Reconnecting to device after reconfiguration: {config_entry}')
-    await connect_to_device(hass, config_entry)
-
-
-async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
-    """Set up from a config entry."""
-    assert config_entry.unique_id, 'Config entry must have a unique_id set'
-    hass.data.setdefault(DOMAIN, {})
-
-    await connect_to_device(hass, config_entry)
-
-    # register listener to handle config options changes
-    config_entry.async_on_unload(
-        config_entry.add_update_listener(config_update_listener)
+    # store runtime data
+    entry.runtime_data = LyngdorfData(
+        client=client,
+        config=config,
+        coordinator=coordinator,
     )
 
-    # forward the setup to the media_player platform
-    # hass.async_create_task(
-    #    hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-    # )
-    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
+    # register listener to handle config options changes
+    entry.async_on_unload(entry.add_update_listener(_async_update_listener))
+
+    # forward the setup to the platforms
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     return True
+
+
+async def _async_update_listener(hass: HomeAssistant, entry: LyngdorfConfigEntry) -> None:
+    """Handle options update."""
+    LOG.info(f'Reloading integration after reconfiguration: {entry.entry_id}')
+    await hass.config_entries.async_reload(entry.entry_id)
+
+
+async def async_unload_entry(hass: HomeAssistant, entry: LyngdorfConfigEntry) -> bool:
+    """Unload a config entry."""
+    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)

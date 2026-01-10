@@ -2,53 +2,81 @@
   "config": {
     "step": {
       "user": {
-        "title": "Configure Lyngdorf",
-        "description": "Set up your Lyngdorf audio processor",
+        "title": "Connect to Lyngdorf Processor",
+        "description": "Set up your Lyngdorf surround sound processor. You can connect via network (recommended) or RS-232 serial.",
         "data": {
-          "model_id": "Lyngdorf model",
-          "url": "Connection URL (e.g., socket://192.168.1.100:84 or /dev/ttyUSB0)",
-          "baudrate": "Baud rate (for RS232 serial connections)"
+          "model_id": "Processor Model",
+          "url": "Connection Address",
+          "baudrate": "Serial Baud Rate"
+        },
+        "data_description": {
+          "model_id": "Select the model of your Lyngdorf processor.",
+          "url": "For network: socket://192.168.1.100:84 or socket://lyngdorf.local:84. For RS-232: /dev/ttyUSB0 or COM3.",
+          "baudrate": "Only needed for RS-232 serial connections. Most devices use 115200."
         }
       }
     },
     "error": {
-      "cannot_connect": "Failed to connect to device",
-      "unsupported": "Unsupported device model",
-      "unknown": "Unexpected error occurred"
+      "cannot_connect": "Could not connect to the processor. Please check the address and ensure the device is powered on.",
+      "unsupported": "This processor model is not supported.",
+      "unknown": "An unexpected error occurred. Please check the logs for details."
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "This device is already configured."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Configure Lyngdorf",
+        "title": "Lyngdorf Settings",
         "menu_options": {
           "connection": "Connection Settings",
-          "sources": "Source Names",
-          "zone2": "Zone 2 Configuration"
+          "sources": "Input Source Names",
+          "zone2": "Zone 2 Settings"
         }
       },
       "connection": {
         "title": "Connection Settings",
-        "description": "Configure how Home Assistant connects to your Lyngdorf processor",
+        "description": "Update how Home Assistant connects to your Lyngdorf processor.",
         "data": {
-          "url": "Connection URL",
-          "baudrate": "Baud Rate"
+          "url": "Connection Address",
+          "baudrate": "Serial Baud Rate"
+        },
+        "data_description": {
+          "url": "For network: socket://192.168.1.100:84. For RS-232: /dev/ttyUSB0 or COM3.",
+          "baudrate": "Only needed for RS-232 serial connections."
         }
       },
       "sources": {
-        "title": "Source Names",
-        "description": "Customize the names of your audio sources. Leave blank to use default names."
+        "title": "Input Source Names",
+        "description": "Customize the display names for your input sources. Leave blank to use the default name.",
+        "data": {
+          "source_1": "HDMI",
+          "source_3": "Optical 1",
+          "source_4": "Optical 2",
+          "source_5": "Optical 3",
+          "source_6": "Optical 4",
+          "source_7": "AES/EBU",
+          "source_8": "Coaxial 1",
+          "source_9": "Coaxial 2",
+          "source_10": "Coaxial 3",
+          "source_11": "Internal Player",
+          "source_12": "USB",
+          "source_24": "Audio Return Channel"
+        }
       },
       "zone2": {
-        "title": "Zone 2 Configuration",
-        "description": "Configure Zone 2 settings. Maximum volume is a safety limit in dB.",
+        "title": "Zone 2 Settings",
+        "description": "Configure a secondary audio zone. Zone 2 outputs audio to a separate room or speaker set.",
         "data": {
           "zone2_enabled": "Enable Zone 2",
-          "zone2_default_source": "Default Source for Zone 2",
-          "zone2_max_volume": "Maximum Volume (dB)"
+          "zone2_default_source": "Default Input Source",
+          "zone2_max_volume": "Maximum Volume"
+        },
+        "data_description": {
+          "zone2_enabled": "Create a separate media player entity for Zone 2.",
+          "zone2_default_source": "The input source to select when Zone 2 is turned on.",
+          "zone2_max_volume": "Safety limit for Zone 2 volume in decibels (dB). Recommended: -20 dB for safety."
         }
       }
     }
@@ -56,47 +84,47 @@
   "entity": {
     "select": {
       "roomperfect_position": {
-        "name": "RoomPerfect position"
+        "name": "RoomPerfect Position"
       },
       "roomperfect_voicing": {
-        "name": "RoomPerfect voicing"
+        "name": "RoomPerfect Voicing"
       },
       "audio_mode": {
-        "name": "Audio mode"
+        "name": "Audio Mode"
       }
     },
     "number": {
       "trim_bass": {
-        "name": "Bass trim"
+        "name": "Bass Trim"
       },
       "trim_treble": {
-        "name": "Treble trim"
+        "name": "Treble Trim"
       },
       "trim_center": {
-        "name": "Center trim"
+        "name": "Center Channel Trim"
       },
       "trim_lfe": {
-        "name": "LFE trim"
+        "name": "Subwoofer (LFE) Trim"
       },
       "trim_surrounds": {
-        "name": "Surround trim"
+        "name": "Surround Channels Trim"
       },
       "trim_height": {
-        "name": "Height trim"
+        "name": "Height Channels Trim"
       },
       "lipsync": {
-        "name": "Lip sync delay"
+        "name": "Lip Sync Delay"
       }
     },
     "sensor": {
       "audio_format": {
-        "name": "Audio format"
+        "name": "Audio Format"
       },
       "video_input": {
-        "name": "Video input"
+        "name": "Video Input"
       },
       "video_output": {
-        "name": "Video output"
+        "name": "Video Output"
       }
     }
   }

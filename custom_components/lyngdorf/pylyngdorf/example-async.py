@@ -1,6 +1,7 @@
 """Example usage of pylyngdorf asynchronous API."""
 
 import asyncio
+
 from pylyngdorf import async_get_lyngdorf
 
 
@@ -9,7 +10,9 @@ async def main():
     device = await async_get_lyngdorf('mp60', '/dev/ttyUSB0', asyncio.get_event_loop())
 
     # or connect via IP socket
-    # device = await async_get_lyngdorf('mp60', 'socket://192.168.1.100:84', asyncio.get_event_loop())
+    # device = await async_get_lyngdorf(
+    #     'mp60', 'socket://192.168.1.100:84', asyncio.get_event_loop()
+    # )
 
     # power control
     print('Power on')

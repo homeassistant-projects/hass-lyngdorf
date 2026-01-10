@@ -1,17 +1,16 @@
-"""Constants for the Lyngdorf integration"""
+"""Constants for the Lyngdorf integration."""
 
 from __future__ import annotations
 
 from typing import Final
 
 # import from embedded pylyngdorf package
-from .pylyngdorf.models import SUPPORTED_MODELS as LYNGDORF_MODELS, DEFAULT_IP_PORT
+from .pylyngdorf.models import DEFAULT_IP_PORT, SUPPORTED_MODELS as LYNGDORF_MODELS
 
-DOMAIN: Final[str] = 'lyngdorf'
+DOMAIN: Final = 'lyngdorf'
 
 DEFAULT_URL: Final = f'socket://lyngdorf.local:{DEFAULT_IP_PORT}'
 
-CONF_URL: Final = 'url'
 CONF_BAUD_RATE: Final = 'baudrate'
 CONF_MODEL: Final = 'model_id'
 CONF_SOURCES: Final = 'sources'
