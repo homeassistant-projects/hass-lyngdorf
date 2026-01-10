@@ -1,6 +1,8 @@
 """Lyngdorf device model definitions and configurations."""
 
-from typing import Dict, Any
+from __future__ import annotations
+
+from typing import Any
 
 # connection parameters
 DEFAULT_BAUD_RATE = 115200
@@ -14,7 +16,7 @@ MIN_TIME_BETWEEN_COMMANDS = 0.1  # 100ms between volume updates
 MIN_TIME_BETWEEN_GENERAL_COMMANDS = 0.05  # 50ms for other commands
 
 # audio input definitions (common to MP-50 and MP-60)
-AUDIO_INPUTS = {
+AUDIO_INPUTS: dict[int, str] = {
     0: 'None',
     1: 'HDMI',
     3: 'SPDIF 1 (Optical)',
@@ -35,7 +37,7 @@ AUDIO_INPUTS = {
 }
 
 # video input definitions (common to both models)
-VIDEO_INPUTS = {
+VIDEO_INPUTS: dict[int, str] = {
     0: 'None',
     1: 'HDMI 1',
     2: 'HDMI 2',
@@ -49,7 +51,7 @@ VIDEO_INPUTS = {
 }
 
 # video output definitions
-VIDEO_OUTPUTS = {
+VIDEO_OUTPUTS: dict[int, str] = {
     0: 'None',
     1: 'HDMI Out 1',
     2: 'HDMI Out 2',
@@ -57,7 +59,7 @@ VIDEO_OUTPUTS = {
 }
 
 # stream types (MP-60 network player)
-STREAM_TYPES = {
+STREAM_TYPES: dict[int, str] = {
     0: 'None',
     1: 'vTuner',
     2: 'Spotify',
@@ -67,7 +69,7 @@ STREAM_TYPES = {
     6: 'Roon Ready',
 }
 
-MODEL_CONFIGS: Dict[str, Dict[str, Any]] = {
+MODEL_CONFIGS: dict[str, dict[str, Any]] = {
     'mp50': {
         'name': 'MP-50',
         'description': 'Lyngdorf MP-50 Surround Sound Processor',
@@ -119,18 +121,15 @@ MODEL_CONFIGS: Dict[str, Dict[str, Any]] = {
 SUPPORTED_MODELS = list(MODEL_CONFIGS.keys())
 
 
-def get_model_config(model_id: str) -> Dict[str, Any]:
+def get_model_config(model_id: str) -> dict[str, Any]:
     """Get configuration for a specific model."""
     if model_id not in MODEL_CONFIGS:
-        raise ValueError(
-            f"Unsupported model '{model_id}'. Supported: {SUPPORTED_MODELS}"
-        )
+        raise ValueError(f"Unsupported model '{model_id}'. Supported: {SUPPORTED_MODELS}")
     return MODEL_CONFIGS[model_id]
 
 
 def db_to_protocol(db: float) -> int:
-    """
-    Convert dB value to protocol integer.
+    """Convert dB value to protocol integer.
 
     Lyngdorf uses 0.1dB precision, so multiply by 10.
     Example: -45.5dB -> -455
@@ -139,8 +138,7 @@ def db_to_protocol(db: float) -> int:
 
 
 def protocol_to_db(value: int) -> float:
-    """
-    Convert protocol integer to dB value.
+    """Convert protocol integer to dB value.
 
     Example: -455 -> -45.5dB
     """

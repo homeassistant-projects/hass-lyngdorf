@@ -1,15 +1,17 @@
 """Sensor entities for Lyngdorf integration."""
 
+from __future__ import annotations
+
 import logging
 from typing import Any
 
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from . import LyngdorfConfigEntry
 from .const import DOMAIN
 from .coordinator import LyngdorfCoordinator
 
@@ -18,16 +20,16 @@ LOG = logging.getLogger(__name__)
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
+    entry: LyngdorfConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Lyngdorf sensor entities."""
-    coordinator: LyngdorfCoordinator = hass.data[DOMAIN][config_entry.entry_id]['coordinator']
+    coordinator = entry.runtime_data.coordinator
 
     entities: list[SensorEntity] = [
-        LyngdorfAudioFormatSensor(coordinator, config_entry),
-        LyngdorfVideoInputSensor(coordinator, config_entry),
-        LyngdorfVideoOutputSensor(coordinator, config_entry),
+        LyngdorfAudioFormatSensor(coordinator),
+        LyngdorfVideoInputSensor(coordinator),
+        LyngdorfVideoOutputSensor(coordinator),
     ]
 
     async_add_entities(entities, update_before_add=True)
@@ -41,12 +43,10 @@ class LyngdorfSensorEntity(CoordinatorEntity[LyngdorfCoordinator], SensorEntity)
     def __init__(
         self,
         coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
         entity_type: str,
     ) -> None:
         """Initialize the sensor entity."""
         super().__init__(coordinator)
-        self._config_entry = config_entry
         self._attr_unique_id = f'{DOMAIN}_{coordinator.model_id}_{entity_type}'.lower()
 
         model_name = coordinator.client._model_config['name']
@@ -64,13 +64,9 @@ class LyngdorfAudioFormatSensor(LyngdorfSensorEntity):
     _attr_translation_key = 'audio_format'
     _attr_icon = 'mdi:waveform'
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize audio format sensor."""
-        super().__init__(coordinator, config_entry, 'audio_format')
+        super().__init__(coordinator, 'audio_format')
 
     @property
     def native_value(self) -> str | None:
@@ -107,13 +103,9 @@ class LyngdorfVideoInputSensor(LyngdorfSensorEntity):
     _attr_translation_key = 'video_input'
     _attr_icon = 'mdi:video-input-hdmi'
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize video input sensor."""
-        super().__init__(coordinator, config_entry, 'video_input')
+        super().__init__(coordinator, 'video_input')
 
     @property
     def native_value(self) -> str | None:
@@ -141,13 +133,9 @@ class LyngdorfVideoOutputSensor(LyngdorfSensorEntity):
     _attr_translation_key = 'video_output'
     _attr_icon = 'mdi:video-output-hdmi'
 
-    def __init__(
-        self,
-        coordinator: LyngdorfCoordinator,
-        config_entry: ConfigEntry,
-    ) -> None:
+    def __init__(self, coordinator: LyngdorfCoordinator) -> None:
         """Initialize video output sensor."""
-        super().__init__(coordinator, config_entry, 'video_output')
+        super().__init__(coordinator, 'video_output')
 
     @property
     def native_value(self) -> str | None:

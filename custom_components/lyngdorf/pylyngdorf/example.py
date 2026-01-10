@@ -1,6 +1,7 @@
 """Example usage of pylyngdorf synchronous API."""
 
 import time
+
 from pylyngdorf import get_lyngdorf
 
 # connect to MP-50 via serial port

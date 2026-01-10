@@ -1,14 +1,23 @@
 """DataUpdateCoordinator for Lyngdorf integration."""
 
-from datetime import timedelta
+from __future__ import annotations
+
 import logging
+from datetime import timedelta
 from typing import Any
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .pylyngdorf.state import DeviceState, PowerState, VolumeState, SourceInfo
-from .pylyngdorf.state import RoomPerfectState, AudioModeState, TrimSettings
+from .pylyngdorf.state import (
+    AudioModeState,
+    DeviceState,
+    PowerState,
+    RoomPerfectState,
+    SourceInfo,
+    TrimSettings,
+    VolumeState,
+)
 
 LOG = logging.getLogger(__name__)
 
@@ -45,11 +54,10 @@ class LyngdorfCoordinator(DataUpdateCoordinator[DeviceState]):
             self._setup_callbacks()
 
     def _setup_callbacks(self) -> None:
-        """Setup protocol callbacks for real-time state updates."""
+        """Set up protocol callbacks for real-time state updates."""
         protocol = self.client._protocol
 
-        # register general callback to trigger immediate coordinator update
-        async def on_state_update(state_type: str, data: dict) -> None:
+        async def on_state_update(state_type: str, data: dict[str, Any]) -> None:
             """Handle state update from device."""
             LOG.debug(f'State update callback: {state_type}')
             # trigger immediate refresh to update all entities
@@ -87,7 +95,7 @@ class LyngdorfCoordinator(DataUpdateCoordinator[DeviceState]):
                     if source_info:
                         state.source_main = SourceInfo(
                             index=source_info['source'],
-                            name=source_info.get('name', '')
+                            name=source_info.get('name', ''),
                         )
 
                     # fetch RoomPerfect state
@@ -107,7 +115,7 @@ class LyngdorfCoordinator(DataUpdateCoordinator[DeviceState]):
                     if audio_mode:
                         state.audio_mode = AudioModeState(
                             mode=audio_mode.get('mode'),
-                            mode_name=audio_mode.get('name')
+                            mode_name=audio_mode.get('name'),
                         )
 
                     # fetch trim settings
@@ -149,7 +157,7 @@ class LyngdorfCoordinator(DataUpdateCoordinator[DeviceState]):
                     if zone2_source:
                         state.source_zone2 = SourceInfo(
                             index=zone2_source['source'],
-                            name=zone2_source.get('name', '')
+                            name=zone2_source.get('name', ''),
                         )
 
             return state
