@@ -5,7 +5,6 @@
     "codeowners": ["@rsnodgrass"],
     "config_flow": true,
     "documentation": "https://github.com/homeassistant-projects/hass-lyngdorf",
-    "homeassistant": "2025.2.0",
     "integration_type": "device",
     "iot_class": "local_push",
     "issue_tracker": "https://github.com/homeassistant-projects/hass-lyngdorf/issues",
