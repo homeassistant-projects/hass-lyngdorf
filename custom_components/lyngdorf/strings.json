@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Connect to Lyngdorf Processor",
-        "description": "Set up your Lyngdorf surround sound processor. You can connect via network (recommended) or RS-232 serial.",
+        "description": "Set up your Lyngdorf surround sound processor. You can connect via network (recommended) or RS-232 serial. [☕ Tip the Author](https://buymeacoffee.com/DYks67r)",
         "data": {
           "model_id": "Processor Model",
           "url": "Connection Address",

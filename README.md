@@ -5,10 +5,7 @@
 ![release_date](https://img.shields.io/github/release-date/homeassistant-projects/hass-lyngdorf.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/MIT)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
-
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 [![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://buymeacoffee.com/DYks67r)
-[![Support on Patreon][patreon-shield]][patreon]
 
 ![Lyngdorf Logo](https://github.com/homeassistant-projects/hass-lyngdorf/blob/main/brands/logo.png?raw=true)
 
@@ -143,6 +140,10 @@ Sources are dynamically discovered from the processor. Common inputs include:
 
 ## Support
 
+This integration is maintained in my free time. Sponsorship directly funds new device support and faster updates.
+
+[![Buy Me a Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://buymeacoffee.com/DYks67r)
+
 - **Issues**: [GitHub Issues](https://github.com/homeassistant-projects/hass-lyngdorf/issues)
 - **Community**: [Home Assistant Community Forum](https://community.home-assistant.io/t/lyngdorf-audio-control/450908)
 - **Pull Requests**: Contributions welcome!
@@ -180,6 +181,4 @@ This integration uses an embedded Python library for communication:
 
 [forum]: https://forum/lyngdorf
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
-[patreon]: https://www.patreon.com/rsnodgrass
-[patreon-shield]: https://frenck.dev/wp-content/uploads/2019/12/patreon.png
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-production%20ready-brightgreen.svg
